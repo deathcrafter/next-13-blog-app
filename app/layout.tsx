@@ -94,13 +94,13 @@ function Navbar({ session }: { session: Session | null }) {
 								className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-300 rounded-box w-52"
 							>
 								<li>
-									<a className="justify-between">
-										Profile
+									<Link
+										href={"/my-posts"}
+										className="justify-between"
+									>
+										My Posts
 										<span className="badge">New</span>
-									</a>
-								</li>
-								<li>
-									<a>Settings</a>
+									</Link>
 								</li>
 								<li>
 									<Link href={"/auth/logout"}>Logout</Link>

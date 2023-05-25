@@ -15,7 +15,7 @@ async function getPosts() {
 	return posts;
 }
 
-function PostCard({ post }: { post: TPost & { slug: string } }) {
+export function PostCard({ post }: { post: TPost & { slug: string } }) {
 	return (
 		<Link
 			href={"/posts/id/" + post.slug}
