@@ -89,7 +89,6 @@ export default function PostInteractions({
 									({
 										..._post,
 										liked,
-										likes: _post!.likes + (liked ? 1 : -1),
 									} as ExtendedPost)
 							);
 						} else if (res.status == 401) {
