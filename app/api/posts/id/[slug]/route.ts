@@ -96,7 +96,6 @@ export async function POST(
 				author: new Types.ObjectId(session.id),
 				body,
 			});
-			console.log(post);
 			await post.save();
 			const comments = post.comments.slice();
 			await User.populate(comments, {

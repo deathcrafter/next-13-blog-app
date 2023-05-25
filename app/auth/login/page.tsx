@@ -36,6 +36,7 @@ export default function Page({}) {
 		if (res?.ok && !res.error) {
 			// console.log(res);
 			router.push(searchParams.get("callbackUrl") || "/");
+			router.refresh();
 		} else {
 			// console.log(res?.error);
 			setError(

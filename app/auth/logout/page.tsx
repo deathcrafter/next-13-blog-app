@@ -10,6 +10,7 @@ export default function Page() {
 	useEffect(() => {
 		signOut({ redirect: false }).then(() => {
 			router.push(searchParams.get("callbackUrl") || "/auth/login");
+			router.refresh();
 		});
 	}, []);
 
