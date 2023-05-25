@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import PostViewer from "@/components/post-viewer";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import useLogin from "@/lib/useLogin";
 
 async function getPostEditInfo(slug: string) {
 	const uri = "/api/posts/id/" + slug + "/edit";
@@ -25,10 +26,10 @@ async function getPostEditInfo(slug: string) {
 export default function Page({ params }: { params: { slug: string } }) {
 	const pathname = usePathname();
 	const router = useRouter();
+	const login = useLogin();
 	const session = useSession({
 		required: true,
-		onUnauthenticated: () =>
-			signIn("credentials", { callbackUrl: pathname }),
+		onUnauthenticated: () => login(pathname),
 	});
 	const [formData, setFormData] = useState<
 		{

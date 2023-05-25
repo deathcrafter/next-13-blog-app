@@ -5,8 +5,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Post as TPost } from "@/components/post-viewer";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import useLogin from "@/lib/useLogin";
 
 type ExtendedPost = TPost & {
 	likes: number;
@@ -28,6 +28,7 @@ export default function PostInteractions({
 	slug: string;
 }) {
 	const session = useSession();
+	const login = useLogin();
 
 	const [post, setPost] = useState<ExtendedPost>(JSON.parse(initPost));
 	const [commentForm, setCommentForm] = useState<boolean>(false);
@@ -61,9 +62,7 @@ export default function PostInteractions({
 					className="col-span-1 btn btn-ghost"
 					onClick={async () => {
 						if (session.status != "authenticated")
-							return signIn("credentials", {
-								callbackUrl: pathname,
-							});
+							return login(pathname);
 						setPost(
 							(_post) =>
 								({
@@ -128,9 +127,7 @@ export default function PostInteractions({
 					className="col-span-1 btn btn-ghost"
 					onClick={() => {
 						if (session.status != "authenticated")
-							return signIn("credentials", {
-								callbackUrl: pathname,
-							});
+							return login(pathname);
 						setCommentForm((_) => !_);
 					}}
 				>

@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import PostViewer from "@/components/post-viewer";
+import useLogin from "@/lib/useLogin";
 
 export default function Page() {
+	const login = useLogin();
 	const pathname = usePathname();
 	const session = useSession({
 		required: true,
-		onUnauthenticated: () =>
-			signIn("credentials", { callbackUrl: pathname }),
+		onUnauthenticated: () => login(pathname),
 	});
 	const router = useRouter();
 	const [formData, setFormData] = useState({

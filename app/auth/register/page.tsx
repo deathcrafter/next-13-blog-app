@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useSearchParams, redirect, useRouter } from "next/navigation";
 import Link from "next/link";
