@@ -130,7 +130,10 @@ export default function Page({}) {
 				</button>
 				<p className="text-center">
 					Already an user?{" "}
-					<Link href={"/auth/login"} className="btn-link">
+					<Link
+						href={"/auth/login?" + searchParams.toString()}
+						className="btn-link"
+					>
 						Log In
 					</Link>
 				</p>

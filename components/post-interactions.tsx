@@ -6,6 +6,7 @@ import { Post as TPost } from "@/components/post-viewer";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import { signIn, useSession } from "next-auth/react";
 
 type ExtendedPost = TPost & {
 	likes: number;
@@ -26,6 +27,8 @@ export default function PostInteractions({
 	post: string;
 	slug: string;
 }) {
+	const session = useSession();
+
 	const [post, setPost] = useState<ExtendedPost>(JSON.parse(initPost));
 	const [commentForm, setCommentForm] = useState<boolean>(false);
 	const commentFormRef = useRef<HTMLElement>(null);
@@ -57,11 +60,17 @@ export default function PostInteractions({
 					type="button"
 					className="col-span-1 btn btn-ghost"
 					onClick={async () => {
+						if (session.status != "authenticated")
+							return signIn("credentials", {
+								callbackUrl: pathname,
+							});
 						setPost(
 							(_post) =>
 								({
 									..._post,
 									liked: !_post?.liked,
+									likes:
+										_post!.likes + (!_post.liked ? 1 : -1),
 								} as ExtendedPost)
 						);
 						const res = await fetch("/api/posts/id/" + slug, {
@@ -119,6 +128,10 @@ export default function PostInteractions({
 					type="button"
 					className="col-span-1 btn btn-ghost"
 					onClick={() => {
+						if (session.status != "authenticated")
+							return signIn("credentials", {
+								callbackUrl: pathname,
+							});
 						setCommentForm((_) => !_);
 					}}
 				>

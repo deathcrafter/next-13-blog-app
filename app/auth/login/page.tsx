@@ -123,7 +123,10 @@ export default function Page({}) {
 				</button>
 				<p className="text-center">
 					New to NextBlog?{" "}
-					<Link href={"/auth/register"} className="btn-link">
+					<Link
+						href={"/auth/register?" + searchParams.toString()}
+						className="btn-link"
+					>
 						Register
 					</Link>
 				</p>
